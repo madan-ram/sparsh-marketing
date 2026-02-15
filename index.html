@@ -590,6 +590,161 @@
                 padding: 6px 4px;
             }
         }
+    
+        :root{
+            --primary:#667eea;
+            --secondary:#764ba2;
+            --text:#1f2937;
+            --muted:#6b7280;
+            --border:#e5e7eb;
+            --bg-soft:#f8fafc;
+        }
+
+        /* --- Quote (Summary) polish --- */
+        #quotation-display{
+            margin-top: 10px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+        }
+
+        .quote-header{
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            gap:16px;
+            flex-wrap:wrap;
+            padding-bottom: 14px;
+            border-bottom: 2px solid rgba(102,126,234,0.25);
+            margin-bottom: 14px;
+        }
+        .quote-title{
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            display:flex;
+            align-items:center;
+            gap:10px;
+            letter-spacing:0.2px;
+        }
+        .quote-title i{ color: var(--primary); }
+        .quote-subtitle{
+            margin-top: 4px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .quote-meta{
+            display:grid;
+            grid-template-columns: repeat(3, minmax(140px, 1fr));
+            gap:10px 14px;
+            min-width: 420px;
+        }
+        .quote-meta-item{
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+        .quote-meta-label{
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .quote-meta-value{
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        #quotation-display .price-warning{
+            margin: 12px 0 18px;
+        }
+
+        #quotation-display table{
+            width:100%;
+            border-collapse: collapse;
+            overflow: visible;
+            display: table;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        #quotation-display thead{
+            background: #f3f4ff;
+            color: var(--text);
+        }
+        #quotation-display th{
+            padding: 12px 12px;
+            font-size: 11px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: #374151;
+            border-bottom: 1px solid var(--border);
+        }
+        #quotation-display td{
+            padding: 12px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text);
+        }
+        #quotation-display tbody tr:nth-child(even){
+            background: #fafbff;
+        }
+        #quotation-display tbody tr:hover{
+            background: #f3f7ff;
+        }
+
+        .totals-section{
+            border: 1px solid var(--border);
+            background: var(--bg-soft);
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .total-row{
+            font-size: 14px;
+        }
+        .total-row.grand-total{
+            border-top: 2px solid rgba(102,126,234,0.35);
+            border-bottom: 2px solid rgba(102,126,234,0.35);
+        }
+
+        .quote-terms{
+            margin-top: 18px;
+            padding: 14px 16px;
+            border: 1px dashed rgba(102,126,234,0.5);
+            border-radius: 12px;
+            background: #fbfbff;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .quote-terms strong{
+            color: var(--text);
+        }
+
+        @media (max-width: 768px){
+            .quote-meta{ grid-template-columns: 1fr; min-width: 0; width: 100%; }
+        }
+
+        @media print{
+            @page { size: A4; margin: 14mm; }
+            body{ padding:0; }
+            .container{ padding: 0; }
+            .header{ margin-bottom: 16px; padding-bottom: 12px; border-bottom-width: 2px; }
+            .logo{ width: 64px; height: 64px; font-size: 26px; border-radius: 10px; }
+            .company-name{ font-size: 20px; }
+            .company-info h1{ font-size: 26px; }
+            #quotation-display{ border: none; padding: 0; }
+            .quote-header{ border-bottom: 1px solid #dbe1ff; }
+            .totals-section{ max-width: 360px; margin-left: auto; }
+            #quotation-display table{ border-radius: 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -669,9 +824,28 @@
 
         <!-- Quotation Display -->
         <div id="quotation-display">
-            <h3 style="color: #2c3e50; margin-bottom: 20px;"><i class="fas fa-file-invoice-dollar"></i> Quotation Summary</h3>
-            
-            <!-- Price Warning -->
+            <div class="quote-header">
+                <div>
+                    <div class="quote-title"><i class="fas fa-file-invoice-dollar"></i> Quotation Summary</div>
+                    <div class="quote-subtitle">Itemized quote with GST and totals</div>
+                </div>
+                <div class="quote-meta">
+                    <div class="quote-meta-item">
+                        <div class="quote-meta-label">Quote ID</div>
+                        <div class="quote-meta-value" id="quoteIdDisplay">-</div>
+                    </div>
+                    <div class="quote-meta-item">
+                        <div class="quote-meta-label">Date</div>
+                        <div class="quote-meta-value" id="quoteDateDisplay">-</div>
+                    </div>
+                    <div class="quote-meta-item">
+                        <div class="quote-meta-label">Dealer Type</div>
+                        <div class="quote-meta-value" id="dealerTypeDisplay">-</div>
+                    </div>
+                </div>
+            </div>
+
+<!-- Price Warning -->
             <div class="price-warning print-show" style="display: none;">
                 <i class="fas fa-exclamation-circle"></i>
                 <p><strong>Important:</strong> Prices are subject to change. This quotation is valid as of <span id="validityDate"></span>. Please confirm current pricing before placing your order.</p>
@@ -711,6 +885,13 @@
                     <span>Grand Total:</span>
                     <span id="grandTotal">₹0.00</span>
                 </div>
+            </div>
+
+            <div class="quote-terms">
+                <strong>Notes:</strong>
+                Prices shown are fetched from the current dealer sheet at the time of generation.
+                This quotation is valid as of <span id="validityDateInline"></span>.
+                Please confirm pricing before placing your order.
             </div>
 
             <div class="actions">
@@ -790,12 +971,31 @@
         window.addEventListener('DOMContentLoaded', function() {
             loadFromURL();
             updateDateTime();
-            
-            // Add initial product row if none exist
+            syncQuoteMetaDisplay();
+
+            const quoteIdInput = document.getElementById('uniqueQuoteID');
+            if (quoteIdInput) quoteIdInput.addEventListener('input', syncQuoteMetaDisplay);
+
+            const dealerTypeSelect = document.getElementById('dealerType');
+            if (dealerTypeSelect) dealerTypeSelect.addEventListener('change', syncQuoteMetaDisplay);
+// Add initial product row if none exist
             if (products.length === 0) {
                 addProductRow();
             }
         });
+        // Keep quotation header meta in sync (for screen + print)
+        function syncQuoteMetaDisplay() {
+            const quoteId = (document.getElementById('uniqueQuoteID')?.value || '').trim();
+            const dealerType = (document.getElementById('dealerType')?.value || '').trim();
+
+            const qEl = document.getElementById('quoteIdDisplay');
+            if (qEl) qEl.textContent = quoteId || '-';
+
+            const dEl = document.getElementById('dealerTypeDisplay');
+            if (dEl) dEl.textContent = dealerType || '-';
+        }
+
+
 
         // Update date and time
         function updateDateTime() {
@@ -816,7 +1016,16 @@
             document.getElementById('quoteDate').textContent = dateStr;
             document.getElementById('validityDate').textContent = dateStr;
             document.getElementById('generationTimestamp').textContent = timeStr;
-        }
+
+            // Quote header (summary) fields
+            const dateDisp = document.getElementById('quoteDateDisplay');
+            if (dateDisp) dateDisp.textContent = dateStr;
+
+            const validityInline = document.getElementById('validityDateInline');
+            if (validityInline) validityInline.textContent = dateStr;
+
+            syncQuoteMetaDisplay();
+}
 
         // Load data from URL parameters if present
         function loadFromURL() {

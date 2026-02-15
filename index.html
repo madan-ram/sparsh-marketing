@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Quotation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .company-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .company-tagline {
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+
+        .company-info {
+            text-align: right;
+        }
+
+        .company-info h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .company-info p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .quotation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            color: #34495e;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .editable-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .editable-field input,
+        .editable-field select {
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            flex: 1;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .editable-field input:focus,
+        .editable-field select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .edit-icon {
+            cursor: pointer;
+            color: #667eea;
+            font-size: 18px;
+            padding: 5px;
+            transition: all 0.3s;
+        }
+
+        .edit-icon:hover {
+            color: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .control-panel {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .control-panel h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-panel h3 i {
+            color: #667eea;
+        }
+
+        .products-input {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            table {
+                display: table;
+            }
+        }
+
+        .products-table {
+            margin-bottom: 20px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 14px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .input-cell input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .input-cell input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+        }
+
+        .add-product-btn {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .add-product-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .totals-section {
+            margin-left: auto;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 15px;
+        }
+
+        .total-row.grand-total {
+            border-top: 3px solid #667eea;
+            border-bottom: 3px solid #667eea;
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 10px;
+            padding: 15px 0;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn i {
+            font-size: 18px;
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+
+        .btn-refresh:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(243, 156, 18, 0.4);
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #1fb854 100%);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .no-price {
+            color: #e74c3c;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .print-show {
+            display: none;
+        }
+
+        .price-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+            border-left: 5px solid #ffc107;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(255, 193, 7, 0.2);
+        }
+
+        .price-warning i {
+            color: #ffc107;
+            font-size: 24px;
+        }
+
+        .price-warning p {
+            margin: 0;
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .price-status {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .price-fetched {
+            color: #27ae60;
+        }
+
+        .price-pending {
+            color: #f39c12;
+        }
+
+        .quote-metadata {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-top: 15px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                border-radius: 0;
+            }
+            
+            .control-panel {
+                display: none !important;
+            }
+            
+            .actions {
+                display: none !important;
+            }
+            
+            .edit-icon {
+                display: none !important;
+            }
+
+            .print-show {
+                display: block !important;
+            }
+
+            .price-warning {
+                display: flex !important;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-section {
+                flex-direction: column;
+            }
+
+            .company-info {
+                text-align: center;
+            }
+
+            .company-info h1 {
+                font-size: 24px;
+            }
+
+            .quotation-details {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+
+            .control-panel {
+                padding: 15px;
+            }
+
+            th, td {
+                padding: 8px 5px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .totals-section {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            .total-row {
+                font-size: 14px;
+            }
+
+            .total-row.grand-total {
+                font-size: 18px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-info h1 {
+                font-size: 20px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .company-name {
+                font-size: 18px;
+            }
+
+            th, td {
+                font-size: 11px;
+                padding: 6px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="message-area"></div>
+        
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">YC</div>
+                <div class="company-details">
+                    <div class="company-name">Your Company</div>
+                    <div class="company-tagline">Quality Products & Services</div>
+                </div>
+            </div>
+            <div class="company-info">
+                <h1>QUOTATION</h1>
+                <p>Professional Product Quote</p>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h3><i class="fas fa-clipboard-list"></i> Quotation Details</h3>
+            
+            <div class="quotation-details">
+                <div class="detail-item">
+                    <span class="detail-label">Quote ID / Dealer Contact</span>
+                    <div class="editable-field">
+                        <input type="text" id="uniqueQuoteID" placeholder="Enter Quote ID">
+                        <span class="edit-icon"><i class="fas fa-edit"></i></span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Dealer Type (Locked)</span>
+                    <div class="editable-field">
+                        <select id="dealerType" disabled style="background-color: #f0f0f0; cursor: not-allowed; opacity: 0.8;">
+                            <option value="1">Type 1</option>
+                            <option value="2">Type 2</option>
+                        </select>
+                        <span class="edit-icon" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-lock"></i></span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value" id="quoteDate">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value price-status" id="priceStatus">
+                        <span class="price-pending"><i class="fas fa-exclamation-triangle"></i> Prices not fetched</span>
+                    </span>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-shopping-cart"></i> Products</h3>
+            <button class="add-product-btn" onclick="addProductRow()"><i class="fas fa-plus-circle"></i> Add Product</button>
+            
+            <div style="overflow-x: auto;">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 100px;">Product ID</th>
+                            <th style="min-width: 120px;">Product Name</th>
+                            <th style="min-width: 80px;" class="text-center">Quantity</th>
+                            <th style="min-width: 100px;" class="text-right">Unit Price (₹)</th>
+                            <th style="min-width: 70px;" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productInputTable">
+                        <!-- Products will be added here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-refresh" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i> Fetch Prices & Calculate</button>
+        </div>
+
+        <!-- Quotation Display -->
+        <div id="quotation-display">
+            <h3 style="color: #2c3e50; margin-bottom: 20px;"><i class="fas fa-file-invoice-dollar"></i> Quotation Summary</h3>
+            
+            <!-- Price Warning -->
+            <div class="price-warning print-show" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p><strong>Important:</strong> Prices are subject to change. This quotation is valid as of <span id="validityDate"></span>. Please confirm current pricing before placing your order.</p>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th class="text-right">Quantity</th>
+                            <th class="text-right">Unit Price (₹)</th>
+                            <th class="text-right">Total (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quotationTable">
+                        <tr>
+                            <td colspan="5" class="text-center" style="color: #7f8c8d; padding: 30px;">
+                                Add products and click "Fetch Prices & Calculate" to generate quotation
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₹0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>GST (18%):</span>
+                    <span id="gst">₹0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Grand Total:</span>
+                    <span id="grandTotal">₹0.00</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-print" onclick="printQuotation()"><i class="fas fa-print"></i> Print Quote</button>
+                <button class="btn btn-whatsapp" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i> Share on WhatsApp</button>
+            </div>
+
+            <div class="footer print-show">
+                <div class="logo-section" style="justify-content: center; margin-bottom: 15px;">
+                    <div class="logo">YC</div>
+                    <div class="company-details">
+                        <div class="company-name">Your Company</div>
+                        <div class="company-tagline">Quality Products & Services</div>
+                    </div>
+                </div>
+                <p>Thank you for your business!</p>
+                <p>This is a computer-generated quotation and does not require a signature.</p>
+                <div class="quote-metadata">
+                    <p>Generated on: <span id="generationTimestamp"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+        let pricingData = null;
+
+        // Set price status indicator
+        function setPriceStatus(kind, text) {
+            const statusEl = document.getElementById('priceStatus');
+            const icon = kind === 'ok' ? 'fa-circle-check'
+                : kind === 'loading' ? 'fa-sync fa-spin'
+                : kind === 'error' ? 'fa-triangle-exclamation'
+                : 'fa-circle-info';
+
+            const color = kind === 'ok' ? '#27ae60'
+                : kind === 'loading' ? '#f39c12'
+                : kind === 'error' ? '#e74c3c'
+                : '#7f8c8d';
+
+            statusEl.style.color = color;
+            statusEl.innerHTML = `<i class="fas ${icon}"></i> ${text}`;
+        }
+
+        // Helper functions for validation
+        function normalizeToken(s) {
+            return String(s ?? '').trim();
+        }
+
+        function isLikelySeparatorToken(s) {
+            const t = normalizeToken(s).toUpperCase();
+            return t === '' || t === 'START' || t === 'BEGIN' || t === 'SEP' || t === 'SEPARATOR';
+        }
+
+        function isValidProductId(pid) {
+            const t = normalizeToken(pid);
+            if (!t) return false;
+            // Treat START, BEGIN, SEP as invalid (separator tokens)
+            if (isLikelySeparatorToken(t)) return false;
+            return true;
+        }
+
+        function isValidQty(value) {
+            // If it's already a number, check it
+            if (typeof value === 'number') {
+                return Number.isFinite(value) && Number.isInteger(value) && value >= 1;
+            }
+            // If it's a string, normalize and check
+            const s = normalizeToken(value);
+            if (s === '') return false;
+            const n = Number(s);
+            return Number.isFinite(n) && Number.isInteger(n) && n >= 1;
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadFromURL();
+            updateDateTime();
+            
+            // Add initial product row if none exist
+            if (products.length === 0) {
+                addProductRow();
+            }
+        });
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-IN', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            const timeStr = now.toLocaleString('en-IN', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('quoteDate').textContent = dateStr;
+            document.getElementById('validityDate').textContent = dateStr;
+            document.getElementById('generationTimestamp').textContent = timeStr;
+        }
+
+        // Load data from URL parameters if present
+        function loadFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const productListIds = params.get('productListIds');
+            const quantities = params.get('Quantity');
+            const uniqueQuoteID = params.get('UniqueQuoteID');
+            const dealerType = params.get('DealerType');
+
+            let hasUrlParams = false;
+
+            if (uniqueQuoteID) {
+                document.getElementById('uniqueQuoteID').value = uniqueQuoteID;
+                hasUrlParams = true;
+            }
+
+            if (dealerType) {
+                document.getElementById('dealerType').value = dealerType;
+                hasUrlParams = true;
+            }
+
+            if (productListIds && quantities) {
+                const productIds = productListIds.split(':');
+                const qtys = quantities.split(':');
+
+                products = [];
+                
+                for (let i = 0; i < productIds.length; i++) {
+                    const productId = normalizeToken(productIds[i]);
+                    const qtyStr = normalizeToken(qtys[i] || '');
+                    
+                    // Parse quantity - keep as NaN if invalid so we can highlight it
+                    let qty;
+                    if (isLikelySeparatorToken(qtyStr)) {
+                        qty = NaN; // Will be highlighted as error
+                    } else {
+                        qty = parseInt(qtyStr);
+                        if (isNaN(qty) || qty <= 0) {
+                            qty = NaN; // Invalid, will be highlighted
+                        }
+                    }
+                    
+                    // Add ALL products, even invalid ones (so user can see and fix them)
+                    products.push({
+                        id: productId,
+                        name: '',
+                        quantity: qty,
+                        price: null
+                    });
+                }
+                
+                renderProductInputTable();
+                hasUrlParams = true;
+                
+                console.log(`URL Parsing: ${products.length} products loaded from URL`);
+            }
+
+            // Auto-validate if URL has parameters - highlight errors but DON'T auto-fetch
+            if (hasUrlParams && productListIds && uniqueQuoteID && products.length > 0) {
+                // Wait for DOM to render, then validate and show errors
+                setTimeout(() => {
+                    const validation = validateProducts();
+                    
+                    if (validation.hasErrors) {
+                        // Show errors - user must fix before fetching
+                        const errorMessage = '⚠️ URL contains invalid data. Please fix the highlighted fields:\n\n' + validation.errors.join('\n');
+                        showMessage(errorMessage, 'error');
+                        setPriceStatus('error', 'Fix highlighted fields to fetch prices');
+                        console.log('Validation errors found in URL. User must fix before fetching.');
+                    } else {
+                        // All valid - auto-fetch
+                        setPriceStatus('loading', 'Auto-loading prices...');
+                        console.log('All URL data valid. Auto-fetching prices...');
+                        setTimeout(() => fetchPrices(), 500);
+                    }
+                }, 300);
+            } else if (hasUrlParams && products.length === 0) {
+                // URL had products but somehow none loaded
+                showMessage('URL is empty or malformed. Please add products manually.', 'error');
+            }
+        }
+
+        // Add new product row
+        function addProductRow() {
+            products.push({
+                id: '',
+                name: '',
+                quantity: 1,
+                price: null
+            });
+            renderProductInputTable();
+        }
+
+        // Delete product row
+        function deleteProduct(index) {
+            if (products.length > 1) {
+                products.splice(index, 1);
+                renderProductInputTable();
+                showMessage('Product removed', 'success');
+            } else {
+                showMessage('At least one product is required', 'error');
+            }
+        }
+
+        // Update product data
+        function updateProduct(index, field, value) {
+            products[index][field] = value;
+        }
+
+        // Render product input table
+        function renderProductInputTable() {
+            const tbody = document.getElementById('productInputTable');
+            tbody.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="input-cell">
+                        <input type="text" 
+                               value="${product.id}" 
+                               placeholder="e.g., P1-100"
+                               oninput="updateProduct(${index}, 'id', this.value)">
+                    </td>
+                    <td class="input-cell">
+                        <input type="text" 
+                               value="${product.name}" 
+                               placeholder="Product name (optional)"
+                               oninput="updateProduct(${index}, 'name', this.value)">
+                    </td>
+                    <td class="input-cell text-center">
+                        <input type="number" 
+                               value="${Number.isFinite(product.quantity) ? product.quantity : ''}" 
+                               min="1"
+                               style="text-align: center;"
+                               oninput="updateProduct(${index}, 'quantity', parseInt(this.value) || NaN)">
+                    </td>
+                    <td class="text-right" style="color: #7f8c8d; font-style: italic;">
+                        ${product.price !== null ? formatCurrency(product.price) : 'Not fetched'}
+                    </td>
+                    <td class="text-center">
+                        <button class="delete-btn" onclick="deleteProduct(${index})"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return '₹' + parseFloat(amount).toLocaleString('en-IN', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Show message
+        function showMessage(message, type = 'error') {
+            const messageArea = document.getElementById('message-area');
+            const div = document.createElement('div');
+            div.className = type;
+            // Convert \n to <br> for proper line breaks
+            const formattedMessage = message.replace(/\n/g, '<br>');
+            div.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${formattedMessage}`;
+            messageArea.innerHTML = '';
+            messageArea.appendChild(div);
+            
+            setTimeout(() => {
+                messageArea.innerHTML = '';
+            }, 8000); // Longer timeout for multi-line errors
+        }
+
+        // Get Google Sheet CSV URL with CORS proxy
+        function getSheetCSVUrl(dealerType) {
+            let sheetUrl;
+            if (dealerType === '1') {
+                sheetUrl = 'https://docs.google.com/spreadsheets/d/1-3ohkUjyyjAnzlaU_MRye86LeWovdDSsBF6CYfTu9qU/export?format=csv';
+            } else if (dealerType === '2') {
+                sheetUrl = 'https://docs.google.com/spreadsheets/d/1WaDFq7Pyi2jAIGUp2r_sljATSWZa-0d1fztInqZYlb4/export?format=csv';
+            } else {
+                return null;
+            }
+            
+            // Use CORS proxy to bypass CSP restrictions
+            // Option 1: allOrigins (most reliable)
+            return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(sheetUrl);
+            
+            // Option 2: cors-anywhere (if allOrigins is down)
+            // return 'https://cors-anywhere.herokuapp.com/' + sheetUrl;
+            
+            // Option 3: corsproxy.io
+            // return 'https://corsproxy.io/?' + encodeURIComponent(sheetUrl);
+        }
+
+        // Parse CSV data
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const result = [];
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+                result.push(row);
+            }
+            return result;
+        }
+
+        // Find product price in pricing data
+        function findProductInfo(pricingData, productId) {
+            for (let row of pricingData) {
+                // Check multiple possible column names for product ID
+                const rowProductId = row.ProductIDPrice || row.ProductID || row['Product ID'] || '';
+                
+                if (rowProductId === productId) {
+                    // Try different possible price column names
+                    const price = row.Price || row.price || row.UnitPrice || row['Unit Price'] || null;
+                    const name = row.ProductName || row['Product Name'] || row.Name || '';
+                    return {
+                        price: price ? parseFloat(price) : null,
+                        name: name
+                    };
+                }
+            }
+            return { price: null, name: '' };
+        }
+
+        // Validate product inputs and highlight errors
+        function validateProducts() {
+            let hasErrors = false;
+            const errors = [];
+
+            // Clear previous highlights
+            document.querySelectorAll('.input-cell input').forEach(input => {
+                input.style.border = '1px solid #ddd';
+                input.style.backgroundColor = 'white';
+            });
+
+            products.forEach((product, index) => {
+                const productId = product.id;
+                const quantity = product.quantity;
+
+                // Validate Product ID
+                if (!isValidProductId(productId)) {
+                    hasErrors = true;
+                    const reason = isLikelySeparatorToken(productId) 
+                        ? `Invalid separator token "${productId}"`
+                        : `Empty or invalid Product ID`;
+                    errors.push(`Row ${index + 1}: ${reason}`);
+                    highlightError(index, 'id');
+                }
+
+                // Validate Quantity
+                if (!isValidQty(quantity)) {
+                    hasErrors = true;
+                    const reason = isLikelySeparatorToken(quantity) 
+                        ? `Invalid separator token "${quantity}"`
+                        : `Invalid quantity "${quantity}" (must be a positive integer)`;
+                    errors.push(`Row ${index + 1}: ${reason}`);
+                    highlightError(index, 'quantity');
+                }
+            });
+
+            return { hasErrors, errors };
+        }
+
+        // Highlight error field
+        function highlightError(index, field) {
+            const rows = document.querySelectorAll('#productInputTable tr');
+            if (rows[index]) {
+                const inputs = rows[index].querySelectorAll('input');
+                let targetInput;
+                
+                if (field === 'id') {
+                    targetInput = inputs[0]; // Product ID input
+                } else if (field === 'quantity') {
+                    targetInput = inputs[2]; // Quantity input
+                }
+                
+                if (targetInput) {
+                    targetInput.style.border = '2px solid #e74c3c';
+                    targetInput.style.backgroundColor = '#ffe6e6';
+                }
+            }
+        }
+
+        // Fetch prices and calculate
+        async function fetchPrices() {
+            // Validate inputs
+            const dealerType = document.getElementById('dealerType').value;
+            const uniqueQuoteID = document.getElementById('uniqueQuoteID').value;
+
+            if (!uniqueQuoteID) {
+                showMessage('Please enter Quote ID / Dealer Contact', 'error');
+                document.getElementById('uniqueQuoteID').style.border = '2px solid #e74c3c';
+                return;
+            } else {
+                document.getElementById('uniqueQuoteID').style.border = '2px solid #e0e0e0';
+            }
+
+            const validProducts = products.filter(p => isValidProductId(p.id) && isValidQty(p.quantity));
+            if (validProducts.length === 0) {
+                showMessage('Please add at least one valid product with a Product ID and quantity', 'error');
+                return;
+            }
+
+            // Validate all product inputs
+            const validation = validateProducts();
+            if (validation.hasErrors) {
+                const errorMessage = 'Please fix the following errors:\n\n' + validation.errors.join('\n');
+                showMessage(errorMessage, 'error');
+                return;
+            }
+
+            // Show loading
+            const statusEl = document.getElementById('priceStatus');
+            statusEl.innerHTML = '<span style="color: #f39c12;"><i class="fas fa-spinner fa-spin"></i> Fetching prices...</span>';
+
+            try {
+                // Fetch pricing data
+                const csvUrl = getSheetCSVUrl(dealerType);
+                const response = await fetch(csvUrl);
+                
+                if (!response.ok) {
+                    statusEl.innerHTML = '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Failed to fetch prices</span>';
+                    throw new Error('Failed to fetch pricing data from Google Sheets. Please check if the sheet is publicly accessible.');
+                }
+                
+                const csvText = await response.text();
+                
+                // Check if we got HTML error page instead of CSV
+                if (csvText.includes('<!DOCTYPE html>') || csvText.includes('<html') || csvText.length < 10) {
+                    statusEl.innerHTML = '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Failed to fetch prices</span>';
+                    throw new Error('Google Sheet is PRIVATE!\n\n✅ Action Required:\n1. Open your Google Sheet\n2. Click "Share" button\n3. Change to "Anyone with the link"\n4. Set permission to "Viewer"\n5. Try again\n\nSheet: Type ' + dealerType + '\nSee GOOGLE_SHEETS_SETUP.md');
+                }
+                
+                pricingData = parseCSV(csvText);
+
+                if (pricingData.length === 0) {
+                    statusEl.innerHTML = '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Failed to fetch prices</span>';
+                    throw new Error('No data found in sheet. Check columns: ProductIDPrice, ProductName, Price');
+                }
+
+                // Update product prices and names
+                for (let product of products) {
+                    if (product.id.trim()) {
+                        const info = findProductInfo(pricingData, product.id);
+                        product.price = info.price;
+                        if (!product.name && info.name) {
+                            product.name = info.name;
+                        }
+                    }
+                }
+
+                renderProductInputTable();
+                renderQuotationTable();
+
+                // Show price warning
+                document.querySelector('.price-warning').style.display = 'flex';
+
+                statusEl.innerHTML = '<span class="price-fetched"><i class="fas fa-check-circle"></i> Prices fetched successfully</span>';
+                showMessage('Prices fetched and quotation calculated successfully!', 'success');
+
+            } catch (error) {
+                const statusEl = document.getElementById('priceStatus');
+                statusEl.innerHTML = '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Failed to fetch prices</span>';
+                showMessage('Error: ' + error.message, 'error');
+                console.error('Fetch error:', error);
+                
+                // Don't break the page - allow retry
+                // Reset any loading states
+                pricingData = null;
+            }
+        }
+
+        // Render quotation table
+        function renderQuotationTable() {
+            const tbody = document.getElementById('quotationTable');
+            tbody.innerHTML = '';
+
+            let subtotal = 0;
+            const validProducts = products.filter(p => p.id.trim() !== '');
+
+            if (validProducts.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center" style="color: #7f8c8d; padding: 30px;">
+                            Add products and click "Fetch Prices & Calculate" to generate quotation
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            validProducts.forEach(product => {
+                const row = document.createElement('tr');
+                
+                if (product.price === null) {
+                    row.innerHTML = `
+                        <td>${product.id}</td>
+                        <td>${product.name || product.id}</td>
+                        <td class="text-right">${product.quantity}</td>
+                        <td class="text-right no-price">Not Available</td>
+                        <td class="text-right no-price">-</td>
+                    `;
+                } else {
+                    const total = product.price * product.quantity;
+                    subtotal += total;
+                    
+                    row.innerHTML = `
+                        <td>${product.id}</td>
+                        <td>${product.name || product.id}</td>
+                        <td class="text-right">${product.quantity}</td>
+                        <td class="text-right">${formatCurrency(product.price)}</td>
+                        <td class="text-right">${formatCurrency(total)}</td>
+                    `;
+                }
+                
+                tbody.appendChild(row);
+            });
+
+            // Calculate totals
+            const gstAmount = subtotal * 0.18;
+            const grandTotal = subtotal + gstAmount;
+
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('gst').textContent = formatCurrency(gstAmount);
+            document.getElementById('grandTotal').textContent = formatCurrency(grandTotal);
+        }
+
+        // Print quotation
+        function printQuotation() {
+            const validProducts = products.filter(p => p.id.trim() !== '' && p.price !== null);
+            
+            if (validProducts.length === 0) {
+                showMessage('Please fetch prices first before printing', 'error');
+                return;
+            }
+
+            updateDateTime();
+            window.print();
+        }
+
+        // Share on WhatsApp
+        function shareOnWhatsApp() {
+            const validProducts = products.filter(p => p.id.trim() !== '' && p.price !== null);
+            
+            if (validProducts.length === 0) {
+                showMessage('Please fetch prices first before sharing', 'error');
+                return;
+            }
+
+            const quoteId = document.getElementById('uniqueQuoteID').value || 'N/A';
+            const grandTotal = document.getElementById('grandTotal').textContent;
+            const dateStr = document.getElementById('validityDate').textContent;
+            
+            // Generate URL with current data
+            const dealerType = document.getElementById('dealerType').value;
+            const productIds = products.filter(p => p.id.trim()).map(p => p.id).join(':');
+            const quantities = products.filter(p => p.id.trim()).map(p => p.quantity).join(':');
+            
+            const currentUrl = `${window.location.origin}${window.location.pathname}?productListIds=${productIds}&Quantity=${quantities}&UniqueQuoteID=${quoteId}&DealerType=${dealerType}`;
+            
+            // Create quotation summary
+            let productList = '';
+            validProducts.forEach((product, index) => {
+                const total = product.price * product.quantity;
+                productList += `${index + 1}. ${product.name || product.id} - Qty: ${product.quantity} - ${formatCurrency(total)}\n`;
+            });
+
+            const subtotal = document.getElementById('subtotal').textContent;
+            const gst = document.getElementById('gst').textContent;
+            
+            const message = `*YOUR COMPANY*\n` +
+                `Quality Products & Services\n\n` +
+                `📋 *QUOTATION*\n\n` +
+                `Quote ID: ${quoteId}\n` +
+                `Date: ${dateStr}\n` +
+                `Dealer Type: ${dealerType}\n\n` +
+                `*Products:*\n${productList}\n` +
+                `Subtotal: ${subtotal}\n` +
+                `GST (18%): ${gst}\n` +
+                `*Grand Total: ${grandTotal}*\n\n` +
+                `⚠️ *Important:* Prices are subject to change.\n\n` +
+                `View full quotation: ${currentUrl}`;
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

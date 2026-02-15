@@ -847,6 +847,12 @@
                     const productId = normalizeToken(productIds[i]);
                     const qtyStr = normalizeToken(qtys[i] || '');
                     
+                    // ✅ Skip separator tokens (e.g., START) in product list (do NOT treat as a product row)
+                    // Note: we still allow empty Product IDs to appear so they can be highlighted & fixed.
+                    if (isLikelySeparatorToken(productId) && productId !== '') {
+                        continue;
+                    }
+                    
                     // Parse quantity - keep as NaN if invalid so we can highlight it
                     let qty;
                     if (isLikelySeparatorToken(qtyStr)) {

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="robots" content="noindex, nofollow, noarchive">
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Quotation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -848,8 +848,7 @@
                     const productId = normalizeToken(productIds[i]);
                     const qtyStr = normalizeToken(qtys[i] || '');
                     
-                    // ✅ Skip separator tokens (e.g., START) in product list (do NOT treat as a product row)
-                    // Note: we still allow empty Product IDs to appear so they can be highlighted & fixed.
+                    // ✅ Skip separator tokens (e.g., START) so they don't appear as a product row
                     if (isLikelySeparatorToken(productId) && productId !== '') {
                         continue;
                     }
